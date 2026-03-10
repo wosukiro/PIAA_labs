@@ -112,12 +112,12 @@ def main(N):
             solve_for_others(reduced, s)
             print(len(s))
             for i in s:
-                print(i[0]*k, i[1]*k, i[2]*k)
+                print(i[0]*k+1, i[1]*k+1, i[2]*k)
         else:
             solve_for_others(N, s)
             print(len(s))
             for i in s:
-                print(*i)
+                print(i[0]+1, i[1]+1, i[2])
 
 
 
