@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from straight_ver import main
+from main import main
 import time
 
 if __name__ == "__main__":
