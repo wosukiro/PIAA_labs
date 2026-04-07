@@ -3,6 +3,7 @@ def find_path(matrix: list, k: int):
     print(f"\nНачинаем рекурсивный обход для {k} вершин:")
 
     def dp(mask, last):
+        print(f"\nНовый шаг алгоритма: {bin(mask)[2:].zfill(k)}, {last}")
         if mask == (1 << k) - 1:
             dist_to_start = matrix[last][0]
             if dist_to_start != 0:
@@ -11,6 +12,7 @@ def find_path(matrix: list, k: int):
 
         state = (mask, last)
         if state in mem:
+            print(f"[Используется мемоизация] маска: {bin(mask)[2:].zfill(k)}, последняя: {last} -> длина до начала: {mem[state][0]}")
             return mem[state]
 
         lowest_len = float("+inf")
@@ -19,6 +21,7 @@ def find_path(matrix: list, k: int):
         
         for i in range(k):
             if (mask & (1 << i)) == 0 and matrix[last][i] != 0:
+                
                 child_len, _ = dp(mask | (1 << i), i)
                 
                 if child_len != float("+inf"):
@@ -28,9 +31,9 @@ def find_path(matrix: list, k: int):
                         best_next = i
         
         if lowest_len != float("+inf"):
-            print(f"Состояние (маска:{bin_mask}, последняя:{last}) -> "
+            print(f"\nСостояние (маска: {bin_mask}, последняя: {last}) -> "
                   f"лучший следующий шаг: {best_next}, длина до конца: {lowest_len}")
-        
+        print(f"[Сохраняем состояние для мемоизации] маска: {bin(mask)[2:].zfill(k)}, последняя: {last} -> длина до конца: {lowest_len}")
         mem[state] = (lowest_len, best_next)
         return lowest_len, best_next
 
