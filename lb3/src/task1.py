@@ -39,6 +39,15 @@ def calculate_min_cost(price_rep: int, price_ins: int, price_del: int,
                     dp[i][j-1] + current_ins_price,    
                     dp[i-1][j] + price_del             
                 )
+                print("     ","  ".join([i for i in str_b]))
+                c=0
+                for row in dp:
+                    if c!=0:
+                        print(str_a[c-1],row)
+                    else: 
+                        print(" ",row)
+                    c+=1
+                print()
         print(f"Матрица после обработки символа '{str_a[i-1]}' (Шаг {i}):")
         print("     ","  ".join([i for i in str_b]))
         c=0
@@ -60,7 +69,7 @@ if __name__ == "__main__":
     s_b = input().strip()
     
     # Флаг: 1 - есть доп. данные, 0 - нет доп. данных
-    flag = 0
+    flag = 1
     
     sp_char_rep, sp_price_rep = None, None
     sp_char_ins, sp_price_ins = None, None
