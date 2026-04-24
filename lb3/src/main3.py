@@ -12,38 +12,48 @@ def get_levenshtein_distance(str_a: str, str_b: str,
     if n == 0:
         cost = 0
         for char in str_b:
-            cost += special_price_ins if (special_char_ins is not None and char == special_char_ins) else price_ins
+            if (special_char_ins is not None and char == special_char_ins):
+                cost += special_price_ins
+            else:
+                cost += price_ins
         return cost
         
     prev_row = [0] * (m + 1)
     for j in range(1, m + 1):
-        is_special_ins = (special_char_ins is not None) and (str_b[j-1] == special_char_ins)
-        current_ins_price = special_price_ins if is_special_ins else price_ins
+        if (special_char_ins is not None) and (str_b[j-1] == special_char_ins):
+            current_ins_price = special_price_ins
+        else:
+            current_ins_price = price_ins
         prev_row[j] = prev_row[j-1] + current_ins_price
-
+    
     for i in range(1, n + 1):
         curr_row = [0] * (m + 1)
         curr_row[0] = prev_row[0] + price_del
         
         char_a = str_a[i-1]
-        is_special_rep = (special_char_rep is not None) and (char_a == special_char_rep)
-        current_rep_price = special_price_rep if is_special_rep else price_rep
-        
+        if (special_char_rep is not None) and (char_a == special_char_rep):
+            current_rep_price = special_price_rep
+        else:
+            current_rep_price = price_rep
+
         for j in range(1, m + 1):
             char_b = str_b[j-1]
             
             if char_a == char_b:
                 curr_row[j] = prev_row[j-1]
             else:
-                is_special_ins = (special_char_ins is not None) and (char_b == special_char_ins)
-                current_ins_price = special_price_ins if is_special_ins else price_ins
-                
+                if (special_char_ins is not None) and (char_b == special_char_ins):
+                    current_ins_price = special_price_ins 
+                else:
+                    current_ins_price = price_ins
                 curr_row[j] = min(
                     prev_row[j-1] + current_rep_price, 
                     curr_row[j-1] + current_ins_price, 
                     prev_row[j] + price_del            
                 )
-                
+        print(f"Шаг {i} (Обработка символа '{char_a}'):")
+        print(f"{prev_row}")
+        print(f"{curr_row}\n\n")
         prev_row = curr_row
 
     return prev_row[m]

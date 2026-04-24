@@ -12,8 +12,11 @@ def calculate_min_cost(price_rep: int, price_ins: int, price_del: int,
         dp[i][0] = dp[i-1][0] + price_del
         
     for j in range(1, m + 1):
-        is_special_ins = (special_char_ins is not None) and (str_b[j-1] == special_char_ins)
-        current_ins_price = special_price_ins if is_special_ins else price_ins
+        if (special_char_ins is not None) and (str_b[j-1] == special_char_ins):
+            current_ins_price = special_price_ins
+        else:
+            current_ins_price = price_ins
+
         dp[0][j] = dp[0][j-1] + current_ins_price
 
     for i in range(1, n + 1):
@@ -21,17 +24,31 @@ def calculate_min_cost(price_rep: int, price_ins: int, price_del: int,
             if str_a[i-1] == str_b[j-1]:
                 dp[i][j] = dp[i-1][j-1]
             else:
-                is_special_rep = (special_char_rep is not None) and (str_a[i-1] == special_char_rep)
-                current_rep_price = special_price_rep if is_special_rep else price_rep
-                
-                is_special_ins = (special_char_ins is not None) and (str_b[j-1] == special_char_ins)
-                current_ins_price = special_price_ins if is_special_ins else price_ins
-                
+                if (special_char_rep is not None) and (str_a[i-1] == special_char_rep):
+                    current_rep_price = special_price_rep
+                else:
+                    current_rep_price = price_rep
+
+                if (special_char_ins is not None) and (str_b[j-1] == special_char_ins):
+                    current_ins_price = special_price_ins
+                else:
+                    current_ins_price = price_ins
+
                 dp[i][j] = min(
                     dp[i-1][j-1] + current_rep_price,  
                     dp[i][j-1] + current_ins_price,    
                     dp[i-1][j] + price_del             
                 )
+        print(f"Матрица после обработки символа '{str_a[i-1]}' (Шаг {i}):")
+        print("     ","  ".join([i for i in str_b]))
+        c=0
+        for row in dp:
+            if c!=0:
+                print(str_a[c-1],row)
+            else: 
+                print(" ",row)
+            c+=1
+        print()
 
     return dp[n][m]
 
