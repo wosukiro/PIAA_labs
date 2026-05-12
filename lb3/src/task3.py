@@ -52,8 +52,8 @@ def get_levenshtein_distance(str_a: str, str_b: str,
                     prev_row[j] + price_del            
                 )
         print(f"Шаг {i} (Обработка символа '{char_a}'):")
-        print(f"{prev_row}")
-        print(f"{curr_row}\n\n")
+        print(f"    {prev_row}")
+        print(f"[{char_a}] {curr_row}\n\n")
         prev_row = curr_row
 
     return prev_row[m]
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     
     # Флаг: 1 - есть доп. данные, 0 - классическое расстояние Левенштейна
 
-    flag = 0
+    flag = 1
         
     sp_char_rep, sp_price_rep = None, None
     sp_char_ins, sp_price_ins = None, None

@@ -40,6 +40,15 @@ def calculate_and_print_prescription(price_rep: int, price_ins: int, price_del: 
                     dp[i][j-1] + current_ins_price,    
                     dp[i-1][j] + price_del             
                 )
+                print("     ","  ".join([i for i in str_b]))
+                c=0
+                for row in dp:
+                    if c!=0:
+                        print(str_a[c-1],row)
+                    else: 
+                        print(" ",row)
+                    c+=1
+                print()
         print(f"Матрица после обработки символа '{str_a[i-1]}' (Шаг {i}):")
         print("     ","  ".join([i for i in str_b]))
         c=0
